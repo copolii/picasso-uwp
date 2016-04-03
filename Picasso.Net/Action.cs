@@ -16,16 +16,14 @@
 ****************************************************************************/
 #endregion
 using System;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SampleApp
+namespace Picasso
 {
-    [TestClass]
-    public class UnitTest1
+    internal class Action
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
     }
 }

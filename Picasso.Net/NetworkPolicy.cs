@@ -21,9 +21,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Picasso.Net
+namespace Picasso
 {
-    public class Class1
+    /// <summary>
+    /// Designates the policy to use for network requests.
+    /// </summary>
+    public class NetworkPolicy
     {
+        /// <summary>
+        /// Skips checking the disk cache and forces loading through the network.
+        /// </summary>
+        public static readonly NetworkPolicy NO_CACHE = new NetworkPolicy(1 << 0);
+        /// <summary>
+        /// Skips storing the result into the disk cache.
+        /// </summary>
+        public static readonly NetworkPolicy NO_STORE = new NetworkPolicy(1 << 1);
+        /// <summary>
+        /// Forces the request through the disk cache only, skipping network.
+        /// </summary>
+        public static readonly NetworkPolicy OFFLINE = new NetworkPolicy(1 << 2);
+
+        private readonly int value;
+
+        private NetworkPolicy(int val)
+        {
+            value = val;
+        }
+
+        public static bool ShouldReadFromDiskCache (int memorypolicy)
+        {
+            return 0 == (memorypolicy & NO_CACHE.value);
+        }
+
+        public static bool ShouldWriteToDiskCache (int memorypolicy)
+        {
+            return 0 == (memorypolicy & NO_STORE.value);
+        }
+
+        public static bool IsOfflineOnly(int memorypolicy)
+        {
+            return 0 == (memorypolicy & OFFLINE.value);
+        }
     }
 }
