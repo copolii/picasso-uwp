@@ -107,6 +107,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="SampleApp.licenseheader" />
     <None Include="SampleApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

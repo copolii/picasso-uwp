@@ -111,6 +111,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="Tests.licenseheader" />
     <None Include="Tests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
