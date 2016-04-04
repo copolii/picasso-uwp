@@ -16,53 +16,32 @@
 ****************************************************************************/
 #endregion
 using System;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Windows.UI.Xaml;
-using Windows.ApplicationModel.Core;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Picasso
 {
-    [TestClass]
-    public class UtilsTests
+    /// <summary>
+    /// Image transformation.
+    /// </summary>
+    public interface Transformation
     {
-        [TestMethod]
-        public void TestUIThreadDetectionFromMain()
-        {
-            var task = CheckUIThreadFromMain();
-            task.Wait();
-            Assert.IsTrue(task.Result);
-        }
+        /// <summary>
+        /// Transform the source bitmap into a new bitmap. You may return the original
+        /// if no transformation is required.
+        /// </summary>
+        /// <param name="source">The source bitmap</param>
+        /// <returns>Transformed bitmap</returns>
+        BitmapImage Transform (BitmapImage source);
 
-        private async Task<bool> CheckUIThreadFromMain ()
-        {
-            var tcr = new TaskCompletionSource<bool>();
-
-            await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                tcr.SetResult(global::Picasso.Utils.IsUIThread());
-            });
-
-            return tcr.Task.Result;
-        }
-
-        [TestMethod]
-        public void TestUIThreadDetectionFromBackground()
-        {
-            var task = CheckUIThreadFromTask();
-            task.Wait();
-            Assert.IsFalse(task.Result);
-        }
-
-        private async Task<bool> CheckUIThreadFromTask()
-        {
-            var tcr = new TaskCompletionSource<bool>();
-
-            await Task.Run(() => {
-                tcr.SetResult(global::Picasso.Utils.IsUIThread());
-            });
-
-            return tcr.Task.Result;
-        }
+        /// <summary>
+        /// Returns a unique key for the transformation, used for caching purposes. If the transformation
+        /// has parameters (e.g.size, scale factor, etc) then these should be part of the key.
+        /// </summary>
+        /// <returns>Unique key</returns>
+        string Key ();
     }
 }

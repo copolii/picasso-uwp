@@ -108,10 +108,16 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
+    <Compile Include="BitmapHunter.cs" />
     <Compile Include="NetworkPolicy.cs" />
     <Compile Include="MemoryPolicy.cs" />
+    <Compile Include="Picasso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="RequestBuilder.cs" />
     <Compile Include="RequestHandler.cs" />
+    <Compile Include="Transformation.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Properties\Picasso.Net.rd.xml" />
   </ItemGroup>
