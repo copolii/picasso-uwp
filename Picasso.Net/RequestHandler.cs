@@ -23,7 +23,8 @@ using System.Threading.Tasks;
 
 namespace Picasso
 {
-    public abstract class RequestHandler
+    public abstract partial class RequestHandler
     {
+        
     }
 }

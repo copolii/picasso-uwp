@@ -118,6 +118,7 @@
     <Compile Include="Request.cs" />
     <Compile Include="RequestBuilder.cs" />
     <Compile Include="RequestHandler.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="Transformation.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Properties\Picasso.Net.rd.xml" />

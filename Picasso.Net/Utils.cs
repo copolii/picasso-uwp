@@ -117,6 +117,11 @@ namespace Picasso
             return value;
         }
 
+        internal static T DefaultIfNull<T> (T value, T defaultValue)
+        {
+            return null == value ? defaultValue : value;
+        }
+
         internal static void AssertMain()
         {
             if (!IsMain)
