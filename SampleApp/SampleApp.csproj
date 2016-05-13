@@ -7,7 +7,7 @@
     <ProjectGuid>{7188D9D6-1F0D-4581-BD7F-BEAF5B7F6CDE}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SampleApp</RootNamespace>
+    <RootNamespace>Picasso.Sample</RootNamespace>
     <AssemblyName>SampleApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
@@ -98,6 +98,23 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ContactList.xaml.cs">
+      <DependentUpon>ContactList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContactPage.xaml.cs">
+      <DependentUpon>ContactPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PhotoList.xaml.cs">
+      <DependentUpon>PhotoList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PhotoSlider.xaml.cs">
+      <DependentUpon>PhotoSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UsePicassoOnce.xaml.cs">
+      <DependentUpon>UsePicassoOnce.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sample\DemoItem.cs" />
+    <Compile Include="Sample\ImageManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -128,6 +145,26 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ContactList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ContactPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PhotoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PhotoSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UsePicassoOnce.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -15,8 +15,10 @@
 *  limitations under the License.                                           *
 ****************************************************************************/
 #endregion
+using Picasso.Sample;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -34,14 +36,35 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SampleApp
 {
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private DemoItem[] Items = DemoItem.Values;
+
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void ListView_SelectionChanged (object sender, SelectionChangedEventArgs e)
+        {
+            var item = (sender as ListView).SelectedItem as DemoItem;
+
+            if (null == item)
+            {
+                Debug.WriteLine ("Nothing selected.");
+                return;
+            }
+
+            Navigate (item);
+        }
+
+        private void Navigate (DemoItem item)
+        {
+            Frame.Navigate (item.Page);
         }
     }
 }

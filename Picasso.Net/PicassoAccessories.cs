@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace Picasso
 {
-    /// <summary>
-    /// Image downloading, transformation, and caching manager.
-    /// </summary>
     public partial class Picasso
     {
-        
-    }
+        public enum Priority
+        {
+            Low, Normal, High
+        }
 
-    
+        public enum LoadedFrom
+        {
+            Memory, Disk, Network
+        }
+    }
 }

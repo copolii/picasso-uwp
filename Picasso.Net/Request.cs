@@ -61,21 +61,21 @@ namespace Picasso
         /// <summary>
         /// Target image width for resizing.
         /// </summary>
-        public readonly int? targetWidth;
+        public readonly uint? targetWidth;
         /// <summary>
         /// Target image height for resizing.
         /// </summary>
-        public readonly int? targetHeight;
+        public readonly uint? targetHeight;
         /// <summary>
         /// True if the final image should use the 'centerCrop' scale technique.
         /// This is mutually exclusive with <see cref="centerInside"/>.
         /// </summary>
-        public readonly bool? centerCrop;
+        public readonly bool centerCrop;
         /// <summary>
         /// True if the final image should use the 'centerInside' scale technique.
         /// This is mutually exclusive with <see cref="centerCrop"/>.
         /// </summary>
-        public readonly bool? centerInside;
+        public readonly bool centerInside;
         /// <summary>
         /// True if the image is not to be magnified
         /// </summary>
@@ -101,7 +101,7 @@ namespace Picasso
         /// </summary>
         public readonly Picasso.Priority priority;
 
-        private Request (Uri _uri, string _stableKey, List<Transformation> _transformations, int? width, int? height, bool? ctrCrop, bool? ctrInside,
+        private Request (Uri _uri, string _stableKey, List<Transformation> _transformations, uint? width, uint? height, bool? ctrCrop, bool? ctrInside,
             bool scaledown, float? rotdegrees, float? rotpivotx, float? rotpivoty, Picasso.Priority p)
         {
             uri = _uri;
@@ -109,8 +109,8 @@ namespace Picasso
             trasnsformations = null == _transformations || _transformations.Count == 0 ? null : _transformations.AsReadOnly ();
             targetWidth = width;
             targetHeight = height;
-            centerCrop = ctrCrop;
-            centerInside = ctrInside;
+            centerCrop = (bool)ctrCrop;
+            centerInside = (bool)ctrInside;
             onlyScaleDown = scaledown;
             rotationDegrees = rotdegrees;
             rotationPivotX = rotpivotx;
@@ -118,7 +118,59 @@ namespace Picasso
             priority = p;
         }
 
-        public bool HasSize { get { return null != targetWidth || null != targetHeight; } }
+        public override string ToString ()
+        {
+            var sb = new StringBuilder ("Request{");
+
+            sb.Append (uri.ToString());
+
+            if (null != trasnsformations)
+                foreach (var t in trasnsformations)
+                    sb.Append ($" {t.Key ()}");
+
+            if (null != stableKey)
+                sb.Append ($" stableKey({stableKey})");
+
+            if (targetHeight > 0 || targetWidth > 0)
+                sb.AppendFormat ($" resize ({targetWidth},{targetHeight})");
+
+            if ((bool)centerCrop)
+                sb.Append (" centerCrop");
+
+            if ((bool)centerInside)
+                sb.Append (" centerInside");
+
+            if (rotationDegrees > 0)
+            {
+                sb.Append ($" rotation({rotationDegrees}");
+
+                if (HasRotationPivot)
+                {
+                    sb.Append ($" @ {rotationPivotX},{rotationPivotY}");
+                }
+
+                sb.Append (')');
+            }
+
+            return sb.Append('}').ToString ();
+        }
+
+        internal string LogId
+        {
+            get
+            {
+                var delta = TimeSpan.FromMilliseconds (System.DateTime.Now.Millisecond - StartTime);
+
+                return delta.Milliseconds > TOO_LONG_LOG
+                    ? $"{PlainId}+{delta.Seconds}s"
+                    : $"{PlainId}+{delta.Milliseconds}ms";
+            }
+        }
+
+        internal string PlainId
+        {
+            get { return $"[R{Id}]"; }
+        }
 
         internal string Name
         {
@@ -128,31 +180,21 @@ namespace Picasso
             }
         }
 
-        internal string PlainId
-        {
-            get { return $"[R{Id}]"; }
-        }
+        public bool HasSize { get { return null != targetWidth || null != targetHeight; } }
 
-        internal string LogId
+        internal bool NeedsTransformation
         {
-            get
-            {
-                var delta = TimeSpan.FromMilliseconds(System.DateTime.Now.Millisecond - StartTime);
-
-                return delta.Milliseconds > TOO_LONG_LOG 
-                    ? $"{PlainId}+{delta.Seconds}s" 
-                    : $"{PlainId}+{delta.Milliseconds}ms";
-            }
-        }
-
-        internal bool HasCustomTransformations
-        {
-            get { return null != trasnsformations && trasnsformations.Count > 0; }
+            get { return NeedsMatrixTransformation || HasCustomTransformations; }
         }
 
         internal bool NeedsMatrixTransformation
         {
             get { return HasSize || null != rotationDegrees; }
+        }
+        
+        internal bool HasCustomTransformations
+        {
+            get { return null != trasnsformations && trasnsformations.Count > 0; }
         }
 
         public Builder BuildUpon ()

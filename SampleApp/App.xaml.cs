@@ -24,6 +24,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -77,6 +78,7 @@ namespace SampleApp
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
+                rootFrame.Navigated += OnNavigated;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -85,6 +87,12 @@ namespace SampleApp
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+
+                var navman = SystemNavigationManager.GetForCurrentView ();
+                navman.BackRequested += BackRequested;
+                navman.AppViewBackButtonVisibility = rootFrame.CanGoBack 
+                    ? AppViewBackButtonVisibility.Visible 
+                    : AppViewBackButtonVisibility.Collapsed;
             }
 
             if (rootFrame.Content == null)
@@ -96,6 +104,26 @@ namespace SampleApp
             }
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        private void OnNavigated (object sender, NavigationEventArgs e)
+        {
+            var frame = sender as Frame;
+
+            SystemNavigationManager.GetForCurrentView ().AppViewBackButtonVisibility = frame.CanGoBack
+                ? AppViewBackButtonVisibility.Visible
+                : AppViewBackButtonVisibility.Collapsed;
+        }
+
+        private void BackRequested (object sender, BackRequestedEventArgs e)
+        {
+            var frame = Window.Current.Content as Frame;
+
+            if (!frame.CanGoBack)
+                return;
+
+            e.Handled = true;
+            frame.GoBack ();
         }
 
         /// <summary>
@@ -121,5 +149,7 @@ namespace SampleApp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        
     }
 }

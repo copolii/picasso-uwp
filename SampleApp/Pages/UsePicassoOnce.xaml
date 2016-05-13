@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Picasso.Sample.Pages.UsePicassoOnce"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Picasso.Sample.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <StackPanel >
+            <Image x:Name="LargeImage" 
+                   HorizontalAlignment="Stretch"
+                   Stretch="UniformToFill"
+                   Height="300" />
+            <TextBlock 
+                Padding="10" 
+                HorizontalAlignment="Center" 
+                TextWrapping="WrapWholeWords"
+                Text="3 different images of different sizes. Pretty static." />
+            <Image x:Name="SmallImage" Width="100" Height="60" Margin="20" Stretch="UniformToFill"/>
+            <Image x:Name="TallImage" Height="400" Margin="20" Stretch="Uniform" />
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

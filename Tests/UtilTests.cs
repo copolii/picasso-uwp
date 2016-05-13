@@ -40,7 +40,7 @@ namespace Picasso
             var tcr = new TaskCompletionSource<bool>();
 
             await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                tcr.SetResult(global::Picasso.Utils.IsUIThread());
+                tcr.SetResult(global::Picasso.Utils.IsMain);
             });
 
             return tcr.Task.Result;
@@ -59,7 +59,7 @@ namespace Picasso
             var tcr = new TaskCompletionSource<bool>();
 
             await Task.Run(() => {
-                tcr.SetResult(global::Picasso.Utils.IsUIThread());
+                tcr.SetResult(global::Picasso.Utils.IsMain);
             });
 
             return tcr.Task.Result;

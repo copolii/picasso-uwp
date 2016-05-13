@@ -113,6 +113,7 @@
     <Compile Include="NetworkPolicy.cs" />
     <Compile Include="MemoryPolicy.cs" />
     <Compile Include="Picasso.cs" />
+    <Compile Include="PicassoAccessories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="RequestBuilder.cs" />
